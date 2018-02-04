@@ -1,0 +1,4 @@
+nbproject
+/src/libqtest/dist/
+/src/libqtest/build/
+.dep.inc
