@@ -18,10 +18,32 @@ import java.util.List;
 
 public class libquantum {
 
+    private static _libquantum _i = Native.loadLibrary("quantum", _libquantum.class);
+    private static _libquantum INSTANCE = (_libquantum) Native.loadLibrary("jquantum", _libquantum.class);
+    private static _libquantum SYNC_INSTANCE = (_libquantum) Native.synchronizedLibrary(INSTANCE);
+
+    public static class qReg extends _libquantum.jquantum_reg {
+
+        public qReg() {
+
+            super();
+        }
+    }
+
     private interface _libquantum extends Library {
 
-        _libquantum i = Native.loadLibrary("quantum", _libquantum.class);
-        _libquantum INSTANCE = (_libquantum) Native.loadLibrary("jquantum", _libquantum.class);
+        public static class unsignedLongLong extends NativeLong {
+
+            public unsignedLongLong() {
+
+                super(0, true);
+            }
+
+            public unsignedLongLong(long v) {
+
+                super(v, true);
+            }
+        }
 
         public static class komplex extends Structure {
 
@@ -52,7 +74,7 @@ public class libquantum {
             public int size;
             public int hashw;
             public komplex[] amplitude = new komplex[1];
-            public NativeLong[] state = new NativeLong[1];
+            public unsignedLongLong[] state = new unsignedLongLong[1];
             public int[] hash = new int[1];
 
             protected List getFieldOrder() {
@@ -73,21 +95,26 @@ public class libquantum {
             }
         }
 
-        public void jquantum_new_qureg(jquantum_reg jreg, long initval, int width);
+        public void jquantum_new_qureg(jquantum_reg jreg, unsignedLongLong initval, int width);
         public void jquantum_print_qureg(jquantum_reg jreg);
     }
 
     public static void main(String[] args) {
 
-        _libquantum libq = _libquantum.INSTANCE;
-        _libquantum.jquantum_reg jreg = new _libquantum.jquantum_reg();
-        _libquantum.jquantum_reg jreg2 = new _libquantum.jquantum_reg();
-        libq.jquantum_new_qureg(jreg , 0, 1);
-        libq.jquantum_new_qureg(jreg2 , 12, 8);
-        libq.jquantum_print_qureg(jreg);
-        libq.jquantum_print_qureg(jreg2);
-        //libq.quantum_print_qureg(reg);
+        druckeQReg(neuesQReg(128, 8));
+    }
 
+    public static qReg neuesQReg(long v, int w) {
+
+        qReg ret = new qReg();
+        SYNC_INSTANCE.jquantum_new_qureg(ret, new _libquantum.unsignedLongLong(v), w);
+
+        return ret;
+    }
+
+    public static void druckeQReg(qReg reg) {
+
+        SYNC_INSTANCE.jquantum_print_qureg(reg);
     }
 }
 
