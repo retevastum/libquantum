@@ -38,6 +38,7 @@ void jquantum_new_qureg(jquantum_reg *jreg, maxint initval, int width) {
     quantum_reg reg = quantum_new_qureg(initval, width);
     
     jquantum_convertqjq(jreg, &reg);
+    quantum_delete_qureg(&reg);
 }
 
 void jquantum_print_qureg(jquantum_reg *jreg) {
@@ -46,6 +47,7 @@ void jquantum_print_qureg(jquantum_reg *jreg) {
     
     jquantum_convertjqq(jreg, &reg);
     quantum_print_qureg(reg);
+    quantum_delete_qureg(&reg);
 }
 
 void jquantum_convertqjq(jquantum_reg *jreg, quantum_reg *reg) {
@@ -54,17 +56,26 @@ void jquantum_convertqjq(jquantum_reg *jreg, quantum_reg *reg) {
     jreg->size = reg->size;
     jreg->hashw = reg->hashw;
     
-    //free(jreg->hash);
+    if (jreg->hash && jreg->hashw) {
+    
+        free(jreg->hash);
+    }
     jreg->hash = calloc(jreg->size, sizeof(int));
     
-    //free(jreg->state);
+    if (jreg->state) {
+    
+        free(jreg->state);
+    }
     jreg->state = calloc(jreg->size, sizeof(maxint));
     for (int i = 0; i < jreg->size; i++) {
         
-        jreg->state[i] = reg->state[i];
+        jreg->state[i] = reg->state[i];        
     }
     
-    //free(jreg->amplitude);
+    if (jreg->amplitude) {
+    
+        free(jreg->amplitude);
+    }
     jreg->amplitude = calloc(jreg->size, sizeof(komplex));
     for (int i = 0; i < jreg->size; i++) {
         
@@ -75,26 +86,38 @@ void jquantum_convertqjq(jquantum_reg *jreg, quantum_reg *reg) {
 
 void jquantum_convertjqq(jquantum_reg *jreg, quantum_reg *reg) {
   
+    quantum_destroy_hash(reg);
+    if (reg->state) {
+    
+        free(reg->state);
+        quantum_memman(-reg->size * sizeof(MAX_UNSIGNED));
+    }
+    if (reg->amplitude) {
+    
+        free(reg->amplitude);
+        quantum_memman(-reg->size * sizeof(COMPLEX_FLOAT));
+    }
+    
     reg->width = jreg->width;
     reg->size = jreg->size;
     reg->hashw = jreg->hashw;
-    
-    //free(reg->hash);
+        
     reg->hash = calloc(reg->size, sizeof(int));
+    quantum_memman((1 << reg->hashw) * sizeof(int));
     
-    //free(reg->state);
-    reg->state = calloc(reg->size, sizeof(maxint));
+    reg->state = calloc(reg->size, sizeof(MAX_UNSIGNED));
     for (int i = 0; i < reg->size; i++) {
         
         reg->state[i] = jreg->state[i];
     }
+    quantum_memman(reg->size * sizeof(MAX_UNSIGNED));
     
-    //free(reg->amplitude);
-    reg->amplitude = calloc(reg->size, sizeof(komplex));
+    reg->amplitude = calloc(reg->size, sizeof(COMPLEX_FLOAT));
     for (int i = 0; i < reg->size; i++) {
         
         reg->amplitude[i] = CMPLX(jreg->amplitude[i].real, jreg->amplitude[i].imag);
     }
+    quantum_memman(reg->size * sizeof(COMPLEX_FLOAT));
 }
 
 

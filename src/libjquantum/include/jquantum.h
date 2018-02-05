@@ -26,6 +26,8 @@
 
 #define __JQUANTUM_H
 
+typedef unsigned long long maxint;
+
 typedef struct {
     
     float real;
@@ -38,8 +40,6 @@ typedef struct {
     int cols;
     komplex *t;
 } jquantum_matrix;
-
-typedef long maxint;
 
 typedef struct {
   
