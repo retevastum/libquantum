@@ -3,7 +3,7 @@
  *  *
  *  *
  *  *   * Copyright (c) 2018. Jörg Jung. Deutschland, Germany.
- *  *   * Alle Rechte vorbehalten.
+ *  *   * FREI.
  *  *
  *  * /
  *
