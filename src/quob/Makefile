@@ -14,12 +14,12 @@ $(PACKAGE).$(SUBPACKAGE).$(VERSION): $(PACKAGE).$(VERSION).so $(PACKAGE).$(SUBPA
 
 $(PACKAGE).$(SUBPACKAGE).$(VERSION).dump: quobdump.c
 
-	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum.$(VERSION) -lm
+	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum -lm
 	cp $@ $(BINDIR)/$@
 
 $(PACKAGE).$(SUBPACKAGE).$(VERSION).print: quobprint.c $(INCLUDES)
 
-	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum.$(VERSION) -lm
+	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum -lm
 	cp $@ $(BINDIR)/$@
 	
 $(PACKAGE).$(VERSION).so:

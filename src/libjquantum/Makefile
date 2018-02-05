@@ -11,7 +11,7 @@ all: libjquantum
 
 libjquantum: $(PACKAGE).$(VERSION).so
 
-$(PACKAGE).$(VERSION).so: libquantum $(SOURCES) $(INCLUDES)
+$(PACKAGE).$(VERSION).so:  $(SOURCES) $(INCLUDES) libquantum
 
 	gcc $(CFLAGS) $(LDFLAGS) -o $@ $(SOURCES) -lm -lquantum
 	cp $@ $(BINDIR)/$@

@@ -14,17 +14,17 @@ $(PACKAGE).$(SUBPACKAGE).$(VERSION): $(PACKAGE).$(VERSION).so $(PACKAGE).$(SUBPA
 
 $(PACKAGE).$(SUBPACKAGE).$(VERSION).shor: shor.c 
 
-	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum.$(VERSION) -lm
+	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum -lm
 	cp $@ $(BINDIR)/$@
 
 $(PACKAGE).$(SUBPACKAGE).$(VERSION).grover: grover.c
 
-	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum.$(VERSION) -lm
+	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum -lm
 	cp $@ $(BINDIR)/$@
 
 $(PACKAGE).$(SUBPACKAGE).$(VERSION).ising: ising.c
 
-	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum.$(VERSION) -lm
+	gcc $(CFLAGS) $(LDFLAGS) -o $@ $+ -lquantum -lm
 	cp $@ $(BINDIR)/$@	
 	
 $(PACKAGE).$(VERSION).so:
