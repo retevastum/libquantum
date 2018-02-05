@@ -97,7 +97,12 @@ quantum_matrix2qureg(quantum_matrix *m, int width)
 quantum_reg
 quantum_new_qureg(MAX_UNSIGNED initval, int width)
 {
+  printf("debug: sizeof(initval): %lu\n", sizeof(MAX_UNSIGNED));
+  printf("debug: sizeof(width): %lu\n", sizeof(int));
+  printf("debug: initval: %llu\n", initval);  
+  printf("debug: width: %d\n", width);  
   quantum_reg reg;
+  
   char *c;
 
   reg.width = width;

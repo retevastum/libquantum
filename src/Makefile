@@ -1,8 +1,12 @@
-all: libquantum libquantum.demo libquantum.quob
+all: libquantum libjquantum libquantum.demo libquantum.quob
 
 libquantum:
 
 	$(MAKE) -C lib $@
+
+libjquantum:
+
+	$(MAKE) -C libjquantum $@
 
 libquantum.demo:
 
@@ -15,5 +19,6 @@ libquantum.quob:
 clean:
 
 	$(MAKE) -C lib $@
+	$(MAKE) -C libjquantum $@
 	$(MAKE) -C demo $@
 	$(MAKE) -C quob $@

@@ -28,9 +28,9 @@ $(PACKAGE).$(VERSION).so:
 	
 clean:
 
-	rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).print
-	rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).dump
-	rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).print
-	rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).dump
+	-rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).print
+	-rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).dump
+	-rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).print
+	-rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).dump
 	
 .PHONY: all clean libquantum.quob $(PACKAGE).$(SUBPACKAGE).$(VERSION)

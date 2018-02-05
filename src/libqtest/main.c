@@ -20,6 +20,8 @@
  */
 int main(int argc, char** argv) {
 
+    printf("sizeof(long long): %d\n", (int) sizeof(unsigned long long));
+    printf("sizeof(long long): %d\n", (int) sizeof(int));
     quantum_reg reg;
     reg = quantum_new_qureg(0,1);
     quantum_print_qureg(reg);

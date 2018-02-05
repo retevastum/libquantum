@@ -4,7 +4,7 @@ Unofficial fork from the original libquantum from http://libquantum.de.
 
 All credits to them.
 
-This one has autotools removed, restructured directories; otherwise nothing changed as of yet.
+This one has autotools removed, restructured directories and got a wrappe rlib (libjquantum) so JNA works.
 
 See original stuff in _orig directory, including license, readme and stuff.
 

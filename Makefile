@@ -1,3 +1,3 @@
-all clean libquantum libquantum.demo libquantum.quob:
+all clean libquantum libjquantum libquantum.demo libquantum.quob:
 
 	$(MAKE) -C src $@

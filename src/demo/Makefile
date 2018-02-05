@@ -33,11 +33,11 @@ $(PACKAGE).$(VERSION).so:
 	
 clean:
 
-	rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).shor
-	rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).grover
-	rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).ising
-	rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).shor
-	rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).grover
-	rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).ising
+	-rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).shor
+	-rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).grover
+	-rm $(PACKAGE).$(SUBPACKAGE).$(VERSION).ising
+	-rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).shor
+	-rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).grover
+	-rm $(BINDIR)/$(PACKAGE).$(SUBPACKAGE).$(VERSION).ising
 	
 .PHONY: all clean libquantum.quob $(PACKAGE).$(SUBPACKAGE).$(VERSION)

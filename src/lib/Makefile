@@ -18,10 +18,12 @@ $(PACKAGE).$(VERSION).so: $(SOURCES) $(INCLUDES)
 
 	gcc $(CFLAGS) $(LDFLAGS) -o $@ $(SOURCES) -lm
 	cp $@ $(BINDIR)/$@
+	cp $@ $(BINDIR)/$(PACKAGE).so
 	
 clean:
 
-	rm $(PACKAGE).$(VERSION).so
-	rm $(BINDIR)/$(PACKAGE).$(VERSION).so
+	-rm $(PACKAGE).$(VERSION).so
+	-rm $(BINDIR)/$(PACKAGE).$(VERSION).so
+	-rm $(BINDIR)/$(PACKAGE).so
 	
 .PHONY: all clean libquantum
