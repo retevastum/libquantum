@@ -13,18 +13,36 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <quantum.h>
+#include <time.h>
 
-/*
- * 
- */
-int main(int argc, char** argv) {
+#include "quantum.h"
+#include "jquantum.h"
 
-    printf("sizeof(long long): %d\n", (int) sizeof(unsigned long long));
-    printf("sizeof(long long): %d\n", (int) sizeof(int));
-    quantum_reg reg;
-    reg = quantum_new_qureg(0,1);
-    quantum_print_qureg(reg);
-    return (EXIT_SUCCESS);
+
+void f (jquantum_reg *jreg)
+{
+  int constant = 1;
+  if(!constant)
+    jquantum_cnot(0, 2, jreg);
+}
+
+int main ()
+{
+  jquantum_reg jreg;
+  jreg.amplitude = 0;
+  jreg.hash = 0;
+  jreg.state = 0;
+  srand(time(0));
+  jquantum_new_qureg(&jreg, 5, 3);
+  jquantum_hadamard(0, &jreg);
+  jquantum_hadamard(1, &jreg);
+  jquantum_hadamard(2, &jreg);
+  f(&jreg);
+  jquantum_hadamard(0, &jreg);
+  jquantum_hadamard(1, &jreg);
+  jquantum_print_qureg(&jreg);
+  printf("Ergebnis: %i\n", jquantum_bmeasure(0, &jreg));
+  jquantum_print_qureg(&jreg);
+  return 0;
 }
 

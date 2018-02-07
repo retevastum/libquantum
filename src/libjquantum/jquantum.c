@@ -26,12 +26,80 @@
 #include <math.h>
 #include <string.h>
 #include <complex.h>
+#include <time.h>
 
 #include "jquantum.h"
 #include "qureg.h"
+#include "measure.h"
+#include "decoherence.h"
+#include "gates.h"
 
 void jquantum_convertqjq(jquantum_reg *jreg, quantum_reg *reg);
 void jquantum_convertjqq(jquantum_reg *jreg, quantum_reg *reg);
+
+void jquantum_cnot(int control, int target, jquantum_reg *jreg) {
+    
+    quantum_reg reg = quantum_new_qureg(0, 1);
+    
+    jquantum_convertjqq(jreg, &reg);
+    quantum_cnot(control, target, &reg);
+    jquantum_convertqjq(jreg, &reg);
+    quantum_delete_qureg(&reg);
+}
+
+int jquantum_bmeasure(int pos, jquantum_reg *jreg) {
+    
+    quantum_reg reg = quantum_new_qureg(0, 1);
+    int ret;
+    
+    jquantum_convertjqq(jreg, &reg);
+    ret = quantum_bmeasure(pos, &reg);
+    jquantum_convertqjq(jreg, &reg);
+    quantum_delete_qureg(&reg);
+    
+    return ret;
+}
+
+void jquantum_set_decoherence(float l) {
+    
+    quantum_set_decoherence(l);
+}
+
+void jquantum_init() {
+    
+    srand(time(0));
+}
+
+void jquantum_hadamard(int target, jquantum_reg *jreg) {
+    
+    quantum_reg reg = quantum_new_qureg(0, 1);
+    
+    jquantum_convertjqq(jreg, &reg);
+    quantum_hadamard(target, &reg);
+    jquantum_convertqjq(jreg, &reg);
+    quantum_delete_qureg(&reg);
+}
+
+maxint jquantum_measure(jquantum_reg *jreg) {
+    
+    quantum_reg reg = quantum_new_qureg(0, 1);
+    maxint ret = 0;
+    
+    jquantum_convertjqq(jreg, &reg);
+    ret = quantum_measure(reg);
+    quantum_delete_qureg(&reg);
+    
+    return ret;
+}
+
+void jquantum_decohere(jquantum_reg *jreg) {
+    
+    quantum_reg reg = quantum_new_qureg(0, 1);
+    
+    jquantum_convertjqq(jreg, &reg);
+    quantum_decohere(&reg);
+    quantum_delete_qureg(&reg);
+}
 
 void jquantum_new_qureg(jquantum_reg *jreg, maxint initval, int width) {
     
@@ -60,7 +128,7 @@ void jquantum_convertqjq(jquantum_reg *jreg, quantum_reg *reg) {
     
         free(jreg->hash);
     }
-    jreg->hash = calloc(jreg->size, sizeof(int));
+    jreg->hash = calloc(jreg->size << jreg->hashw, sizeof(int));
     
     if (jreg->state) {
     
@@ -102,8 +170,8 @@ void jquantum_convertjqq(jquantum_reg *jreg, quantum_reg *reg) {
     reg->size = jreg->size;
     reg->hashw = jreg->hashw;
         
-    reg->hash = calloc(reg->size, sizeof(int));
-    quantum_memman((1 << reg->hashw) * sizeof(int));
+    reg->hash = calloc(reg->size << reg->hashw, sizeof(int));
+    quantum_memman((reg->size << reg->hashw) * sizeof(int));
     
     reg->state = calloc(reg->size, sizeof(MAX_UNSIGNED));
     for (int i = 0; i < reg->size; i++) {

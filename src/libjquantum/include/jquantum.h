@@ -56,15 +56,24 @@ typedef struct {
     int num;          /* total number of state vectors */
     float *prob;      /* probabilities of the state vectors */
     jquantum_reg *reg; /* state vectors */
-} quantum_density_op;
+} jquantum_density_op;
 
-enum {
-  QUANTUM_SOLVER_LANCZOS,
-  QUANTUM_SOLVER_LANCZOS_MODIFIED,
-  QUANTUM_SOLVER_IMAGINARY_TIME
-};
+#ifndef __QUANTUM_H
+    enum {
+      QUANTUM_SOLVER_LANCZOS,
+      QUANTUM_SOLVER_LANCZOS_MODIFIED,
+      QUANTUM_SOLVER_IMAGINARY_TIME
+    };
+#endif
 
 extern void jquantum_new_qureg(jquantum_reg *jreg, maxint initval, int width);
 extern void jquantum_print_qureg(jquantum_reg *jreg);
+extern maxint jquantum_measure(jquantum_reg *jreg);
+extern void jquantum_decohere(jquantum_reg *jreg);
+extern void jquantum_set_decoherence(float l);
+extern void jquantum_init();
+extern void jquantum_hadamard(int target, jquantum_reg *jreg);
+extern void jquantum_cnot(int control, int target, jquantum_reg *jreg);
+extern int jquantum_bmeasure(int pos, jquantum_reg *jreg);
 
 #endif

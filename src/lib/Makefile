@@ -16,7 +16,7 @@ libquantum: $(PACKAGE).$(VERSION).so
 
 $(PACKAGE).$(VERSION).so: $(SOURCES) $(INCLUDES)
 
-	gcc $(CFLAGS) $(LDFLAGS) -o $@ $(SOURCES) -lm
+	gcc $(CFLAGS) $(LDFLAGS) -o $@ $(SOURCES) -lm -llapack
 	cp $@ $(BINDIR)/$@
 	cp $@ $(BINDIR)/$(PACKAGE).so
 	
